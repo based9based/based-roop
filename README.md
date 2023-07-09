@@ -27,6 +27,14 @@ Executing `python run.py` command will launch this window:
 
 Choose a face (image with desired face) and the target image/video (image/video in which you want to replace the face) and click on `Start`. Open file explorer and navigate to the directory you select your output to be in. You will find a directory named `<video_title>` where you can see the frames being swapped in realtime. Once the processing is done, it will create the output file. That's it.
 
+## For the webcam mode
+Just follow the clicks on the screenshot
+1. Select a face
+2. Click live
+3. Wait for a few second (it takes a longer time, usually 10 to 30 seconds before the preview shows up)
+
+Just use your favorite screencapture to stream like OBS
+
 Additional command line arguments are given below. To learn out what they do, check [this guide](https://github.com/s0md3v/roop/wiki/Advanced-Options).
 
 ```
