@@ -35,6 +35,8 @@ Just follow the clicks on the screenshot
 
 Just use your favorite screencapture to stream like OBS
 
+
+
 Additional command line arguments are given below. To learn out what they do, check [this guide](https://github.com/s0md3v/roop/wiki/Advanced-Options).
 
 ```
