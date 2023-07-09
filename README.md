@@ -64,6 +64,6 @@ Looking for a CLI mode? Using the -s/--source argument will make the run program
 - [henryruhs](https://github.com/henryruhs): for being an irreplaceable contributor to the project
 - [ffmpeg](https://ffmpeg.org/): for making video related operations easy
 - [deepinsight](https://github.com/deepinsight): for their [insightface](https://github.com/deepinsight/insightface) project which provided a well-made library and models.
-- [havok2-htwo] (https://github.com/havok2-htwo) : for sharing the code for webcam
-- [GosuDRM] (https://github.com/GosuDRM/nsfw-roop) : for uncensoring roop
+- [havok2-htwo](https://github.com/havok2-htwo) : for sharing the code for webcam
+- [GosuDRM](https://github.com/GosuDRM/nsfw-roop) : for uncensoring roop
 - and all developers behind libraries used in this project.
