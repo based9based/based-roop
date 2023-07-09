@@ -33,6 +33,8 @@ Just follow the clicks on the screenshot
 2. Click live
 3. Wait for a few second (it takes a longer time, usually 10 to 30 seconds before the preview shows up)
 
+![roop-cam](roop-cam.gif)
+
 Just use your favorite screencapture to stream like OBS
 > Note: In case you want to change your face, just select another picture, the preview mode will then restart (so just wait a bit).
 
