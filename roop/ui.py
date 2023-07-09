@@ -13,6 +13,8 @@ from roop.predicter import predict_frame
 from roop.processors.frame.core import get_frame_processors_modules
 from roop.utilities import is_image, is_video, resolve_relative_path
 
+import cv2
+
 ROOT = None
 ROOT_HEIGHT = 700
 ROOT_WIDTH = 600
@@ -90,11 +92,14 @@ def create_root(start: Callable[[], None], destroy: Callable[[], None]) -> ctk.C
 
     preview_button = ctk.CTkButton(root, text='Preview', cursor='hand2', command=lambda: toggle_preview())
     preview_button.place(relx=0.65, rely=0.75, relwidth=0.2, relheight=0.05)
+    
+    live_button = ctk.CTkButton(root, text='Live', cursor='hand2', command=lambda: webcam_preview())
+    live_button.place(relx=0.40, rely=0.83, relwidth=0.2, relheight=0.05)
 
     status_label = ctk.CTkLabel(root, text=None, justify='center')
     status_label.place(relx=0.1, rely=0.9, relwidth=0.8)
 
-    donate_label = ctk.CTkLabel(root, text='^_^ Donate to project ^_^', justify='center', cursor='hand2')
+    donate_label = ctk.CTkLabel(root, text='Become a GitHub Sponsor', justify='center', cursor='hand2')
     donate_label.place(relx=0.1, rely=0.95, relwidth=0.8)
     donate_label.configure(text_color=ctk.ThemeManager.theme.get('RoopDonate').get('text_color'))
     donate_label.bind('<Button>', lambda event: webbrowser.open('https://github.com/sponsors/s0md3v'))
@@ -229,3 +234,50 @@ def update_preview(frame_number: int = 0) -> None:
         image = ImageOps.contain(image, (PREVIEW_MAX_WIDTH, PREVIEW_MAX_HEIGHT), Image.LANCZOS)
         image = ctk.CTkImage(image, size=image.size)
         preview_label.configure(image=image)
+        
+
+def webcam_preview():
+    if roop.globals.source_path is None:
+        # No image selected
+        return
+    
+    global preview_label, PREVIEW
+
+    cap = cv2.VideoCapture(0)  # Use index for the webcam (adjust the index accordingly if necessary)    
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 960)  # Set the width of the resolution
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 540)  # Set the height of the resolution
+    cap.set(cv2.CAP_PROP_FPS, 30)  # Set the frame rate of the webcam
+    PREVIEW_MAX_HEIGHT = 960
+    PREVIEW_MAX_WIDTH = 540
+
+    preview_label.configure(image=None)  # Reset the preview image before startup
+
+    PREVIEW.deiconify()  # Open preview window
+
+    frame_processors = get_frame_processors_modules(roop.globals.frame_processors)
+
+    source_image = None  # Initialize variable for the selected face image
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        # Select and save face image only once
+        if source_image is None and roop.globals.source_path:
+            source_image = get_one_face(cv2.imread(roop.globals.source_path))
+
+        temp_frame = frame.copy()  #Create a copy of the frame
+
+        for frame_processor in frame_processors:
+            temp_frame = frame_processor.process_frame(source_image, temp_frame)
+
+        image = cv2.cvtColor(temp_frame, cv2.COLOR_BGR2RGB)  # Convert the image to RGB format to display it with Tkinter
+        image = Image.fromarray(image)
+        image = ImageOps.contain(image, (PREVIEW_MAX_WIDTH, PREVIEW_MAX_HEIGHT), Image.LANCZOS)
+        image = ctk.CTkImage(image, size=image.size)
+        preview_label.configure(image=image)
+        ROOT.update()
+
+    cap.release()
+    PREVIEW.withdraw()  # Close preview window when loop is finished
