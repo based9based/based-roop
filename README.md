@@ -34,7 +34,7 @@ Just follow the clicks on the screenshot
 3. Wait for a few second (it takes a longer time, usually 10 to 30 seconds before the preview shows up)
 
 Just use your favorite screencapture to stream like OBS
-
+> Note: In case you want to change your face, just select another picture, the preview mode will then restart (so just wait a bit).
 
 
 Additional command line arguments are given below. To learn out what they do, check [this guide](https://github.com/s0md3v/roop/wiki/Advanced-Options).
