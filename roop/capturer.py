@@ -8,9 +8,7 @@ def get_video_frame(video_path: str, frame_number: int = 0) -> Any:
     capture.set(cv2.CAP_PROP_POS_FRAMES, min(frame_total, frame_number - 1))
     has_frame, frame = capture.read()
     capture.release()
-    if has_frame:
-        return frame
-    return None
+    return frame if has_frame else None
 
 
 def get_video_frame_total(video_path: str) -> int:
