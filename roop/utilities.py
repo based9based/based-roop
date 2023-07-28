@@ -21,8 +21,15 @@ if platform.system().lower() == 'darwin':
 
 
 def run_ffmpeg(args: List[str]) -> bool:
-    commands = ['ffmpeg', '-hide_banner', '-hwaccel', 'auto', '-loglevel', roop.globals.log_level]
-    commands.extend(args)
+    commands = [
+        'ffmpeg',
+        '-hide_banner',
+        '-hwaccel',
+        'auto',
+        '-loglevel',
+        roop.globals.log_level,
+        *args,
+    ]
     try:
         subprocess.check_output(commands, stderr=subprocess.STDOUT)
         return True
@@ -81,7 +88,9 @@ def normalize_output_path(source_path: str, target_path: str, output_path: str) 
         source_name, _ = os.path.splitext(os.path.basename(source_path))
         target_name, target_extension = os.path.splitext(os.path.basename(target_path))
         if os.path.isdir(output_path):
-            return os.path.join(output_path, source_name + '-' + target_name + target_extension)
+            return os.path.join(
+                output_path, f'{source_name}-{target_name}{target_extension}'
+            )
     return output_path
 
 

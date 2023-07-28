@@ -62,11 +62,7 @@ def create_queue(temp_frame_paths: List[str]) -> Queue[str]:
 
 
 def pick_queue(queue: Queue[str], queue_per_future: int) -> List[str]:
-    queues = []
-    for _ in range(queue_per_future):
-        if not queue.empty():
-            queues.append(queue.get())
-    return queues
+    return [queue.get() for _ in range(queue_per_future) if not queue.empty()]
 
 
 def process_video(source_path: str, frame_paths: list[str], process_frames: Callable[[str, List[str], Any], None]) -> None:
