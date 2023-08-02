@@ -77,9 +77,7 @@ def decode_execution_providers(execution_providers: List[str]) -> List[str]:
 
 
 def suggest_max_memory() -> int:
-    if platform.system().lower() == 'darwin':
-        return 4
-    return 16
+    return 4 if platform.system().lower() == 'darwin' else 16
 
 
 def suggest_execution_providers() -> List[str]:
@@ -89,9 +87,7 @@ def suggest_execution_providers() -> List[str]:
 def suggest_execution_threads() -> int:
     if 'DmlExecutionProvider' in roop.globals.execution_providers:
         return 1
-    if 'ROCMExecutionProvider' in roop.globals.execution_providers:
-        return 1
-    return 8
+    return 1 if 'ROCMExecutionProvider' in roop.globals.execution_providers else 8
 
 
 def limit_resources() -> None:
